@@ -2,33 +2,39 @@ pipeline {
 
     agent any
 
+    environment {
+
+        IMAGE_NAME = "voyageanalytics"
+
+    }
+
     stages {
-
-        stage('Clone Repository') {
-
-            steps {
-
-                git 'https://github.com/akshat-mishra-ds/Voyage-Analytics-Integrating-MLOps-in-Travel'
-
-            }
-
-        }
 
         stage('Install Dependencies') {
 
             steps {
 
-                bat 'pip install -r requirements.txt'
+                sh 'pip install -r requirements.txt'
 
             }
 
         }
 
-        stage('Run Tests') {
+        stage('Run Regression Model') {
 
             steps {
 
-                bat 'python regression_model/train_regression.py'
+                sh 'python regression_model/train_regression.py'
+
+            }
+
+        }
+
+        stage('Run Classification Model') {
+
+            steps {
+
+                sh 'python classification_model/train_classification.py'
 
             }
 
@@ -38,7 +44,7 @@ pipeline {
 
             steps {
 
-                bat 'docker build -t voyageanalytics .'
+                sh 'docker build -t voyageanalytics .'
 
             }
 
