@@ -6,3 +6,6 @@ mlruns/
 .ipynb_checkpoints/
 .env
 *.log
+*.pkl
+*.tar
+models/
